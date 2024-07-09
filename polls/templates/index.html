@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Cost Prediction</title>
+  <style>
+    /* Your existing CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .form-group .searchTerm,
+    .form-group .searchSelect {
+      width: calc(100% - 10px);
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      outline: none;
+      box-sizing: border-box; /* Ensures padding and border are included in width */
+    }
+
+    .form-group .searchTerm:focus,
+    .form-group .searchSelect:focus {
+      border-color: #00B4CC;
+    }
+
+    .form-group .searchButton {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #00B4CC;
+      color: #fff;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-group .searchButton:hover {
+      background-color: #008DA6;
+    }
+
+    .response-container {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .response-container h3 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .response-container p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00B4CC;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Medical Cost Prediction</h2>
+  <form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="name">Name of the person:</label>
+      <input id="name" name="name" type="text" class="searchTerm" placeholder="Enter name">
+    </div>
+
+    <div class="form-group">
+      <label for="age">Age of the person:</label>
+      <input id="age" name="age" type="text" class="searchTerm" placeholder="Enter age">
+    </div>
+
+    <div class="form-group">
+      <label for="sex">Gender of the person:</label>
+      <select id="sex" name="sex" class="searchSelect">
+        <option value="1">Male</option>
+        <option value="0">Female</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="bmi">BMI of the person:</label>
+      <input id="bmi" name="bmi" type="text" class="searchTerm" placeholder="Enter BMI">
+    </div>
+
+    <div class="form-group">
+      <label for="child">Number of children:</label>
+      <input id="child" name="child" type="text" class="searchTerm" placeholder="Enter number of children">
+    </div>
+
+    <div class="form-group">
+      <label for="smoker">Is the person a smoker?</label>
+      <select id="smoker" name="smoker" class="searchSelect">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="region">Region:</label>
+      <select id="region" name="region" class="searchSelect">
+        <option value="0">Northeast</option>
+        <option value="1">Northwest</option>
+        <option value="2">Southeast</option>
+        <option value="3">Southwest</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" name="pred_button" class="searchButton">Submit</button>
+    </div>
+  </form>
+
+  {% if response %}
+    <div class="response-container">
+      <h3>Predicted Medical Cost:</h3>
+      <p>₹ {{ response|floatformat:2 }}</p>
+    </div>
+  {% endif %}
+</div>
+
+</body>
+</html>
